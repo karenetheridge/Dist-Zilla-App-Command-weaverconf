@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+0.02      2013-01-21 16:22:47 PST-0800
   * Dist::Zilla::App::Command::weaverconf::SExpGen renamed to
     Dist::Zilla::App::CommandHelper::weaverconf::SExpGen to resolve various
     warnings (RT#67379)
