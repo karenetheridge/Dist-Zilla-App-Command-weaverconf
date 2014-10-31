@@ -1,4 +1,6 @@
-.*
-!.gitignore
-Dist-Zilla-App-Command-weaverconf-*
-Debian_CPANTS.txt
+/.ackrc
+/.build/
+!/.gitignore
+/.latest
+/Dist-Zilla-App-Command-weaverconf-*/
+/Dist-Zilla-App-Command-weaverconf-*.tar.gz
