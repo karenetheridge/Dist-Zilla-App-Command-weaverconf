@@ -1,0 +1,76 @@
+=pod
+
+=encoding UTF-8
+
+=head1 NAME
+
+Dist::Zilla::App::Command::weaverconf - Extract your distribution's Pod::Weaver configuration
+
+=head1 VERSION
+
+version 0.03
+
+=head1 SYNOPSIS
+
+    $ dzil weaverconf
+    {
+        "collectors" : [
+            { "command" : "attr",   "new_command" : "head2" },
+            { "command" : "method", "new_command" : "head2" },
+            { "command" : "func",   "new_command" : "head2" },
+            { "command" : "type",   "new_command" : "head2" }
+        ],
+        "transformers" : [
+            {
+                "name" : "Pod::Elemental::Transformer::List",
+                "args" : { "format_name" : "list" }
+            }
+        ]
+
+    }
+
+=head1 DESCRIPTION
+
+This command will extract the Pod::Weaver configuration from a
+directory containing a L<Dist::Zilla> distribution.
+
+The results will be serialized in the requested format, and written to
+C<STDOUT>.
+
+The option C<-f> or C<--format> may be used to request a particular
+output format. The following formats are currently available:
+
+=over 4
+
+=item *
+
+json
+
+the default
+
+=item *
+
+lisp
+
+a plist of lists of plists
+
+=back
+
+=head1 AUTHOR
+
+Florian Ragwitz <rafl@debian.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2010 by Florian Ragwitz.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+
+=head1 CONTRIBUTOR
+
+=for stopwords Karen Etheridge
+
+Karen Etheridge <ether@cpan.org>
+
+=cut
