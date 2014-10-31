@@ -3,7 +3,7 @@ package Dist::Zilla::App::Command::weaverconf;
 
 use Dist::Zilla::App -command;
 use Moose 0.91;
-use JSON::Any;
+use JSON::MaybeXS;
 use List::AllUtils qw(first);
 use MooseX::Types::Moose qw(Str CodeRef);
 use MooseX::Types::Structured 0.20 qw(Map);
@@ -63,7 +63,7 @@ sub _build_formatters {
     my ($self) = @_;
     return {
         lisp => sub { SExpGen->new->visit($_[0]) },
-        json => sub { JSON::Any->new->to_json($_[0]) },
+        json => sub { encode_json($_[0]) },
     };
 }
 

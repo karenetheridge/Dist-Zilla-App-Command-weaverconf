@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - use JSON::MaybeXS instead of JSON::Any
 
 0.02      2013-01-22 00:22:47Z
           - Dist::Zilla::App::Command::weaverconf::SExpGen renamed to
