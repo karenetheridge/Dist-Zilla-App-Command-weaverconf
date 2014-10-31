@@ -2,7 +2,6 @@ package # no indexing, please
     Dist::Zilla::App::CommandHelper::weaverconf::SExpGen;
 
 use Moose;
-use Moose::Autobox;
 use namespace::autoclean;
 
 extends 'Data::Visitor';
@@ -15,14 +14,16 @@ sub visit_value {
 override visit_normal_hash => sub {
     my ($self) = @_;
     my $ret = super;
-    return sprintf q{(list %s)}, $ret->keys->map(sub {
-        sprintf "%s %s", $_, $ret->{$_}
-    })->join(q{ });
+
+    return sprintf q{(list %s)},
+        join(q{ },
+                map { sprintf "%s %s", $_, $ret->{$_} } keys %$ret
+            );
 };
 
 override visit_normal_array => sub {
     my ($self) = @_;
-    return sprintf q{(list %s)}, super->join(q{ });
+    return sprintf q{(list %s)}, join(q{ }, super);
 };
 
 1;
