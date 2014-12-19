@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          - dump JSON in a more human-readable format
 
 0.03      2014-10-31 06:05:16Z
           - use JSON::MaybeXS instead of JSON::Any
