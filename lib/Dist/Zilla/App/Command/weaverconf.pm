@@ -127,7 +127,7 @@ sub format_weaver_config {
     my ($self, $args) = @_;
 
     unless ($self->has_formatter_for($args->{format})) {
-        $self->log("No formatter available for " . $args->{format});
+        $self->log([ 'No formatter available for %s', $args->{format} ]);
         exit 1;
     }
 
