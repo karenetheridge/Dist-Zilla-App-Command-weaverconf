@@ -78,6 +78,7 @@ sub execute {
         $self->format_weaver_config({
             format => (exists $opt->{format} ? $opt->{format} : 'json'),
             config => $self->extract_weaver_config
+            verbose => $self->global_options->verbose,
         }),
     );
     return;
@@ -91,7 +92,15 @@ sub extract_weaver_config {
     } @{ $self->zilla->plugins};
     exit 1 unless $zilla_weaver;
 
+# XXX not including sections?
+# keep original mode,
+# and add a new mode for dumping everything.
+
     my @weaver_plugins = @{ $zilla_weaver->weaver->plugins };
+
+use Data::Dumper;
+local $Data::Dumper::Maxdepth = 3;
+print "### full weaver config: ", Dumper($zilla_weaver->weaver->plugins);
 
     return {
         collectors => [
@@ -116,6 +125,38 @@ sub extract_weaver_config {
                 }
             } grep {
                 $_->isa('Pod::Weaver::Plugin::Transformer')
+            } @weaver_plugins
+        ],
+
+        _everything => [
+            map {
+                +{
+                    class => blessed $_,
+                    #plugin_name => $_->plugin_name,
+                    # XXX all other keys that are not covered below?
+
+#                    $_->isa('Pod::Weaver::Section::Collect')
+#                        ? (do {
+#                            my $t = $_;
+#print "### \$t is $t\n";
+#                            map { ($_ => $t->$_) } qw(command new_command) 
+#                        }) : (),
+
+                    $_->isa('Pod::Weaver::Plugin::Transformer')
+                        ? (do {
+                            name => blessed $_->transformer,
+                            $_->transformer->isa('Pod::Elemental::Transformer::List')
+                                ? (format_name => $_->transformer->format_name)
+                                : ()
+                        }) : (),
+
+                    do {
+                        my $plugin = $_;
+                        map { $_ => $plugin->$_  }
+                            grep { !/^_/ && $_ ne 'weaver' && $_ ne 'transformer' } keys %{$plugin}
+                    },
+
+                }
             } @weaver_plugins
         ],
     };
