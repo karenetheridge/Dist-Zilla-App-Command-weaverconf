@@ -1,6 +1,7 @@
 Revision history for Dist-Zilla-App-Command-weaverconf
 
 {{$NEXT}}
+          - avoid loading some modules in the command until needed
 
 0.05      2015-01-03 20:58:58Z
           - re-release to fix problematic $VERSION declaration (RT#101095)

@@ -5,8 +5,6 @@ our $VERSION = '0.06';
 
 use Dist::Zilla::App -command;
 use Moose 0.91;
-use JSON::MaybeXS ();
-use List::Util qw(first);
 use MooseX::Types::Moose qw(Str CodeRef);
 use MooseX::Types::Structured 0.20 qw(Map);
 use namespace::autoclean;
@@ -64,7 +62,7 @@ sub _build_formatters {
     my ($self) = @_;
     return {
         lisp => sub { Dist::Zilla::App::CommandHelper::weaverconf::SExpGen->new->visit($_[0]) },
-        json => sub { JSON::MaybeXS->new(utf8 => 1, pretty => 1, canonical => 1)->encode($_[0]) },
+        json => sub { require JSON::MaybeXS; JSON::MaybeXS->new(utf8 => 1, pretty => 1, canonical => 1)->encode($_[0]) },
     };
 }
 
@@ -88,7 +86,8 @@ sub execute {
 sub extract_weaver_config {
     my ($self) = @_;
 
-    my $zilla_weaver = first {
+    require List::Util;
+    my $zilla_weaver = List::Util::first {
         $_->isa('Dist::Zilla::Plugin::PodWeaver')
     } @{ $self->zilla->plugins};
     exit 1 unless $zilla_weaver;
