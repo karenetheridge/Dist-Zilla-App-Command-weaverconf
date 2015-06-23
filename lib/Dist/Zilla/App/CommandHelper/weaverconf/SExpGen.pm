@@ -1,6 +1,8 @@
 package # no indexing, please
     Dist::Zilla::App::CommandHelper::weaverconf::SExpGen;
 
+our $VERSION = '0.06';
+
 use Moose;
 use namespace::autoclean;
 

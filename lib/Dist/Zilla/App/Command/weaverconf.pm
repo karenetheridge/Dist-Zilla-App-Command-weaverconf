@@ -1,6 +1,8 @@
 package Dist::Zilla::App::Command::weaverconf;
 # ABSTRACT: Extract your distribution's Pod::Weaver configuration
 
+our $VERSION = '0.06';
+
 use Dist::Zilla::App -command;
 use Moose 0.91;
 use JSON::MaybeXS ();
